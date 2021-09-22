@@ -34,7 +34,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier": "prettier -c --write '**/*'",
+    "pretty-quick": "pretty-quick"
   },
   "eslintConfig": {
     "extends": [
@@ -58,8 +60,12 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
-    "husky": "^7.0.2",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.0",
     "lint-staged": "^11.1.2",
-    "prettier": "2.4.1"
+    "prettier": "2.4.1",
+    "prettier-eslint": "^13.0.0",
+    "pretty-quick": "^3.1.1"
   }
 }

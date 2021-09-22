@@ -1,23 +1,22 @@
 /*
  * @Author: 翁佳琪
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Date: 2021-09-19 00:37:22
- * @LastEditors: 
- * @LastEditTime: 2021-09-19 19:13:49
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-09-19 23:05:12
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/index.scss'
+import './styles/index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Button />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function
