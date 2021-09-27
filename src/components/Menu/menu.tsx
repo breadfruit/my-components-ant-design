@@ -1,75 +1,43 @@
-import React, { FC, useState, createContext, CSSProperties } from 'react';
+import React, { createContext, FC, useState } from 'react';
 import classNames from 'classnames';
-export type MenuMode = 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline';
-export type MenuTheme = 'light' | 'dark';
 
-import { MenuItemProps } from './menuitem';
+export type MenuType = 'horizontal' | 'vertical';
 export interface MenuProps {
   className?: string;
-  mode?: MenuMode;
-  onSelect: (selectnumber: string) => void;
+  style?: React.CSSProperties;
+  index?: string;
   defaultIndex?: string;
-  style?: CSSProperties;
-  antdMenuTheme?: MenuTheme;
-  defaultOpenSubMenus?: string[];
+  onSelected?: (index: string) => void;
+  mode?: MenuType;
 }
-
-//在共享菜单中我们需要想到数组，模式，还有被选中的下标和选中后的回调事件
 interface IMenuContext {
-  index: string;
-  onSelect?: (selectedIndex: string) => void;
-  mode?: MenuMode;
-  defaultOpenSubMenus?: string[];
+  index?: string;
+  onSelected?: (selectedindex: string) => void;
+  mode?: MenuType;
 }
-//menu与item之间需要共享菜单数据，所以利用hook.context来进行数据共享，默认第一个被选中
 export const MenuContext = createContext<IMenuContext>({ index: '0' });
 
-// interface ReactChildren {
-//     map<T, C>(children: C | ReadonlyArray<C>, fn: (child: C, index: number) => T):
-//         C extends null | undefined ? C : Array<Exclude<T, boolean | null | undefined>>;
-//     forEach<C>(children: C | ReadonlyArray<C>, fn: (child: C, index: number) => void): void;
-//     count(children: any): number;
-//     only<C>(children: C): C extends any[] ? never : C;
-//     toArray(children: ReactNode | ReactNode[]): Array<Exclude<ReactNode, boolean | null | undefined>>;
-// }
-
-export const Menu: FC<MenuProps> = props => {
-  const { className, mode, style, children, defaultIndex, onSelect, defaultOpenSubMenus } = props;
-  const [currentActive, setActive] = useState(defaultIndex);
-  const classes = classNames('viking-menu', className, {
+const Menu: FC<MenuProps> = props => {
+  const { style, children, defaultIndex, className, onSelected, mode } = props;
+  const [curindex, setActive] = useState(defaultIndex);
+  const classes = classNames('menu', className, {
     'menu-vertical': mode === 'vertical',
     'menu-horizontal': mode !== 'vertical',
   });
   const handleClick = (index: string) => {
     setActive(index);
-    if (onSelect) {
-      onSelect(index);
+    if (onSelected) {
+      onSelected(index);
     }
   };
-  const passedContext: IMenuContext = {
-    index: currentActive ? currentActive : '0',
-    onSelect: handleClick,
-    mode,
-    defaultOpenSubMenus,
-  };
-  const renderChildren = () => {
-    return React.Children.map(children, (child, index) => {
-      const childElement = child as React.FunctionComponentElement<MenuItemProps>;
-      const { displayName } = childElement.type;
-      if (displayName === 'MenuItem' || displayName === 'SubMenu') {
-        return React.cloneElement(childElement, {
-          index: index.toString(),
-        });
-      } else {
-        console.error('Warning: Menu has a child which is not a MenuItem component');
-      }
-    });
+  const passContext: IMenuContext = {
+    index: curindex ? curindex : '0',
+    onSelected: handleClick,
   };
   return (
-    <ul className={classes} style={style} data-testid="test-menu">
-      <MenuContext.Provider value={passedContext}>{renderChildren()}</MenuContext.Provider>
+    <ul className={classes} data-testid="test-menu" style={style}>
+      <MenuContext.Provider value={passContext}>{children}</MenuContext.Provider>
     </ul>
   );
 };
-
 export default Menu;

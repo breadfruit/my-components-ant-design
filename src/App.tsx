@@ -1,24 +1,17 @@
-import "./App.css";
-import Button from "./components/Button/button";
-
+import './App.css';
+import Menu from './components/Menu/Menu';
+import MenuItem from './components/Menu/MenuItem';
 function App() {
   return (
     <div className="App">
-      <Button btnType="primary" size="larget">
-        primary
-      </Button>
-      <Button btnType="ghost" size="small">
-        ghost
-      </Button>
-      <Button btnType="dashed" size="larget">
-        dashed
-      </Button>
-      <Button btnType="link" size="larget" shape="round">
-        link
-      </Button>
-      <Button btnType="text" size="larget">
-        text
-      </Button>
+      <Menu mode={'horizontal'}>
+        <MenuItem index={'0'}>12</MenuItem>
+        <MenuItem index={'1'}>34</MenuItem>
+        <MenuItem index={'2'}>56</MenuItem>
+        <MenuItem index={'3'} disabled>
+          78
+        </MenuItem>
+      </Menu>
     </div>
   );
 }
