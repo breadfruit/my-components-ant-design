@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, RenderResult, fireEvent, wait } from '@testing-library/react';
+import { render, RenderResult, fireEvent } from '@testing-library/react';
 import Menu, { MenuProps } from './Menu';
 import MenuItem from './MenuItem';
 
@@ -49,7 +49,7 @@ describe('test Menu and MenuItem component in default(horizontal) mode', () => {
     fireEvent.click(thirdItem);
     expect(thirdItem).toHaveClass('is-active');
     expect(activeElement).not.toHaveClass('is-active');
-    expect(testProps.onSelected).toHaveBeenCalledWith('2');
+    expect(testProps.onSelect).toHaveBeenCalledWith('2');
   });
   it('should show dropdown items when hover on subMenu', async () => {});
 });
